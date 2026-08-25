@@ -303,12 +303,20 @@ body {
 /* ============================================================
    IMÁGENES Y VIDEOS EN CHAT
    ============================================================ */
-.chat-image {
+.chat-image,
+.chat-messages img,
+.message img {
   display: block;
   max-width: min(320px, 85%);
   height: auto;
   border-radius: 10px;
   margin-top: 10px;
+}
+
+.avatar img {
+  max-width: 100%;
+  margin-top: 0;
+  border-radius: 50%;
 }
 
 .chat-video {
