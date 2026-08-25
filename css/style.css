@@ -324,9 +324,11 @@ body {
 }
 
 .chat-video {
-  width: 100%;
+  display: block;
+  width: min(320px, 85%);
   border-radius: 10px;
   margin-top: 10px;
+  margin-left: 42px; /* alineado con las burbujas del bot, igual que las fotos */
 }
 
 /* ============================================================
