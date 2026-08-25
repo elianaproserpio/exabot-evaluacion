@@ -418,7 +418,7 @@ body {
   border: 1px solid var(--input-border);
   background: var(--bg-container);
   color: var(--text-bot);
-  font-size: var(--base-font);
+  font-size: max(var(--base-font), 16px); /* iOS: <16px provoca zoom automático al enfocar */
 }
 
 .chat-input-area button {
@@ -557,4 +557,22 @@ body {
 
 .sound-btn:hover {
   transform: none; /* sin la rotación de la rueda */
+}
+
+
+/* ============================================================
+   MOBILE: pantalla completa y altura dinámica (teclado de iOS)
+   ============================================================ */
+@media (max-width: 600px) {
+  body {
+    height: 100dvh;
+    overflow: hidden;
+  }
+  .chat-container {
+    width: 100%;
+    max-width: 100%;
+    height: 100dvh; /* se achica solo cuando aparece el teclado */
+    margin: 0;
+    border-radius: 0;
+  }
 }
