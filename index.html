@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FCEyT | ExaBot</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+  <main class="chat-container">
+    <section class="chat-header">
+      <div class="chat-header-info">
+
+      <h1>ExaBot</h1>
+      <p>Asistente virtual de la FCEyT</p>
+
+      </div>
+<!-- sonido y temas -->
+<div class="header-buttons">
+  <button id="soundBtn" class="prefs-btn sound-btn" title="Sonido de respuesta" aria-label="Activar o silenciar el sonido">🔊</button>
+  <button id="prefsBtn" class="prefs-btn" title="Preferencias" aria-label="Abrir preferencias" aria-expanded="false">⚙️</button>
+</div>
+    </section>
+
+    <!-- Panel de preferencias: se abre/cierra con el ⚙️ (no se apila) -->
+    <section id="prefsPanel" class="prefs-panel" hidden aria-label="Preferencias de visualización">
+      <div class="prefs-row">
+        <span class="prefs-label">🌗 Tema</span>
+        <div class="prefs-options" data-group="theme">
+          <button type="button" data-value="light">☀️ Claro</button>
+          <button type="button" data-value="dark">🌙 Oscuro</button>
+        </div>
+      </div>
+      <div class="prefs-row">
+        <span class="prefs-label">🔔 Sonido de respuesta</span>
+        <div class="prefs-options" data-group="sound">
+          <button type="button" data-value="on">🔊 Activado</button>
+          <button type="button" data-value="off">🔇 Silenciado</button>
+        </div>
+      </div>
+      <div class="prefs-row">
+        <span class="prefs-label">🔤 Tamaño de texto</span>
+        <div class="prefs-options" data-group="fontsize">
+          <button type="button" data-value="peq">Pequeño</button>
+          <button type="button" data-value="med">Mediano</button>
+          <button type="button" data-value="gra">Grande</button>
+        </div>
+      </div>
+      <div class="prefs-footer">
+        <button type="button" id="prefsReset" class="prefs-reset">♻️ Restablecer</button>
+        <button type="button" id="prefsClose" class="prefs-close">Cerrar</button>
+      </div>
+    </section>
+
+
+    
+
+    <section class="chat-messages" id="chatMessages">
+      <div class="msg-row bot">
+        <div class="avatar"><img src="imagenes/exabot_avatar.png" alt="ExaBot"></div>
+        <div class="message bot">
+          👋 ¡Hola! Soy <b>ExaBot</b>, el asistente virtual de la Facultad de Ciencias Exactas y Tecnologías. ¿En qué puedo ayudarte? 
+          <br>Elige una opción:
+        </div>
+      </div>
+
+      <div class="quick-buttons">
+        <button data-message="menu_profesores">👩‍🏫 Buscar un profesor</button>
+        <button data-message="menu_examenes">📝 Saber sobre exámenes finales</button>
+        <button data-message="menu_correlativas">📚 Consultar mis materias y correlativas </button>
+   
+
+    <div class="quick-buttons-hint">
+        💬 Tambien puedes escribir tu consulta en el chat.
+    </div>
+   
+      </div>
+    </section>
+
+    <form class="chat-input-area" id="chatForm">
+      <input type="text" id="chatInput" placeholder="Escribí tu consulta..." autocomplete="off">
+      <button type="submit">Enviar</button>
+    </form>
+  </main>
+
+<script src="js/script.js?v=3"></script>
+
+</body>
+</html>

@@ -1,0 +1,523 @@
+/* ============================================================
+   ExaBot - estilos unificados
+   Soporte de preferencias visuales (US N°14): tema claro/oscuro
+   y tamaño de texto se controlan con los atributos data-theme y
+   data-fontsize en <html>. Incluye markdown renderizado por
+   marked.js, imágenes/videos en chat y estado de carga.
+   ============================================================ */
+
+/* ---- Tema CLARO (por defecto) ---- */
+:root,
+[data-theme="light"] {
+  --bg-page: #eef2f7;
+  --bg-container: #ffffff;
+  --bg-header: #0d6efd;
+  --text-header: #ffffff;
+  --bg-bot: #f1f3f5;
+  --text-bot: #222222;
+  --bg-user: #0d6efd;
+  --text-user: #ffffff;
+  --accent: #0d6efd;
+  --accent-soft: #e7f0ff;
+  --border: #dddddd;
+  --input-border: #cccccc;
+  --hint-color: #666666;
+}
+
+/* ---- Tema OSCURO ---- */
+[data-theme="dark"] {
+  --bg-page: #0f1720;
+  --bg-container: #1b2430;
+  --bg-header: #12303f;
+  --text-header: #ffffff;
+  --bg-bot: #263241;
+  --text-bot: #e8edf2;
+  --bg-user: #2f81f7;
+  --text-user: #ffffff;
+  --accent: #4a9bff;
+  --accent-soft: #22303f;
+  --border: #33414f;
+  --input-border: #3c4a58;
+  --hint-color: #a0a8b0;
+}
+
+/* ---- Tamaño de texto ---- */
+[data-fontsize="peq"]  { --base-font: 12px; }
+[data-fontsize="med"]  { --base-font: 14px; }
+[data-fontsize="gra"]  { --base-font: 17px; }
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-page);
+  transition: background 0.25s ease;
+}
+
+/* ============================================================
+   CONTENEDOR PRINCIPAL
+   ============================================================ */
+.chat-container {
+  width: 420px;
+  max-width: 95vw;
+  height: 90vh;
+  margin: 30px auto;
+  background: var(--bg-container);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  transition: background 0.25s ease;
+}
+
+/* ============================================================
+   HEADER (con botón de preferencias)
+   ============================================================ */
+.chat-header {
+  background: var(--bg-header);
+  color: var(--text-header);
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.chat-header-info h1 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.chat-header-info p {
+  margin: 4px 0 0;
+  font-size: 14px;
+}
+
+/* Botón de configuración (⚙️) siempre visible */
+.prefs-btn {
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: var(--text-header);
+  font-size: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.prefs-btn:hover {
+  background: rgba(255,255,255,0.3);
+  transform: rotate(45deg);
+}
+
+/* ============================================================
+   PANEL DE PREFERENCIAS
+   ============================================================ */
+.prefs-panel {
+  background: var(--bg-bot);
+  color: var(--text-bot);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 14px;
+}
+
+.prefs-panel[hidden] {
+  display: none;
+}
+
+.prefs-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.prefs-label {
+  font-weight: bold;
+}
+
+.prefs-options {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.prefs-options button {
+  padding: 7px 12px;
+  border: 1px solid var(--accent);
+  background: var(--bg-container);
+  color: var(--accent);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.prefs-options button:hover {
+  background: var(--accent-soft);
+}
+
+.prefs-options button.active {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.prefs-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+}
+
+.prefs-reset,
+.prefs-close {
+  padding: 7px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  border: 1px solid var(--input-border);
+  background: var(--bg-container);
+  color: var(--text-bot);
+}
+
+.prefs-reset:hover,
+.prefs-close:hover {
+  background: var(--accent-soft);
+}
+
+/* ============================================================
+   MENSAJES
+   ============================================================ */
+.chat-messages {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  font-size: var(--base-font);
+}
+
+.message {
+  padding: 10px 14px;
+  margin-bottom: 10px;
+  border-radius: 14px;
+  line-height: 1.5;
+  font-size: var(--base-font);
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.message.bot {
+  background: var(--bg-bot);
+  color: var(--text-bot);
+  align-self: flex-start;
+}
+
+.message.user {
+  background: var(--bg-user);
+  color: var(--text-user);
+  margin-left: auto;
+  max-width: 80%;
+}
+
+/* ---- Markdown renderizado por marked.js ---- */
+.message p {
+  margin: 0 0 10px 0;
+}
+
+.message p:last-child {
+  margin-bottom: 0;
+}
+
+.message ul {
+  margin: 8px 0;
+  padding-left: 18px;
+}
+
+.message li {
+  margin: 4px 0;
+}
+
+.message strong {
+  font-weight: 600;
+}
+
+/* ---- Mensaje de fuente (aparece aparte del contenido) ---- */
+.message.fuente {
+  background: var(--accent-soft);
+  color: var(--text-bot);
+  font-size: 0.8em;
+  font-style: normal;
+  border: none;
+  border-radius: 12px;
+  padding: 7px 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: fit-content;
+}
+
+.message.fuente::before {
+  content: "🔗";
+  font-style: normal;
+}
+
+/* ---- Enlaces como botón dentro de mensajes ---- */
+.message .link-btn {
+  display: inline-block;
+  background: var(--accent);
+  color: #ffffff !important;
+  text-decoration: none;
+  padding: 7px 12px;
+  border-radius: 10px;
+  margin: 5px 5px 0 0;
+  font-size: 0.9em;
+  font-style: normal;
+  word-break: break-word;
+}
+
+.message .link-btn:hover {
+  opacity: 0.9;
+}
+
+.message.fuente .link-btn {
+  background: transparent;
+  color: var(--accent) !important;
+  border: none;
+  text-decoration: underline;
+  padding: 0;
+  margin: 0;
+  font-size: 1em;
+}
+
+/* ---- Enlaces markdown genéricos (parseados por marked) ---- */
+.message a {
+  color: var(--accent);
+  text-decoration: underline;
+  word-break: break-word;
+}
+
+/* ============================================================
+   IMÁGENES Y VIDEOS EN CHAT
+   ============================================================ */
+.chat-image {
+  max-width: 100%;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.chat-video {
+  width: 100%;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+/* ============================================================
+   ESTADO DE CARGA ("pensando...")
+   ============================================================ */
+.loading-message {
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%   { opacity: 0.35; }
+  50%  { opacity: 1; }
+  100% { opacity: 0.35; }
+}
+
+/* ============================================================
+   BOTONES RÁPIDOS
+   ============================================================ */
+.quick-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 6px 0 12px;
+}
+
+.quick-buttons button {
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  background: var(--bg-container);
+  color: var(--text-bot);
+  border-radius: 12px;
+  cursor: pointer;
+  text-align: left;
+  font-size: var(--base-font);
+  font-weight: 500;
+  line-height: 1.35;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+  transition: background 0.18s ease, border-color 0.18s ease, transform 0.12s ease, box-shadow 0.18s ease;
+}
+
+.quick-buttons button:hover {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+}
+
+.quick-buttons button:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+}
+
+.quick-buttons button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.quick-buttons button.chosen {
+  background: var(--accent);
+  color: #ffffff;
+  border-color: var(--accent);
+}
+
+.quick-buttons-hint {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: var(--hint-color);
+  text-align: center;
+  font-style: italic;
+}
+
+/* ============================================================
+   ÁREA DE INPUT
+   ============================================================ */
+.chat-input-area {
+  display: flex;
+  border-top: 1px solid var(--border);
+  padding: 10px;
+  gap: 8px;
+}
+
+.chat-input-area input {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--input-border);
+  background: var(--bg-container);
+  color: var(--text-bot);
+  font-size: var(--base-font);
+}
+
+.chat-input-area button {
+  border: none;
+  background: var(--accent);
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 0 16px;
+  cursor: pointer;
+}
+
+
+/* ============================================================
+   AVATARES EN BURBUJAS (bot y usuario)
+   ============================================================ */
+.msg-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.msg-row .avatar {
+  margin-top: 2px;
+}
+
+.msg-row.user {
+  flex-direction: row-reverse;
+}
+
+.msg-row .message {
+  margin-bottom: 0;
+  max-width: 80%;
+}
+
+.avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Alinear los botones rápidos con las burbujas del bot (espacio del avatar: 34px + 8px de gap) */
+.chat-messages .quick-buttons {
+  margin-left: 42px;
+}
+
+/* La burbuja del usuario pegada a su avatar, todo alineado a la derecha */
+.msg-row.user {
+  justify-content: flex-start; /* con row-reverse, esto ancla el conjunto a la derecha */
+}
+
+.msg-row .message.user {
+  margin-left: 0;
+}
+
+/* Avatar del usuario centrado verticalmente con su burbuja */
+.msg-row.user {
+  align-items: center;
+}
+
+.msg-row.user .avatar {
+  margin-top: 0;
+}
+
+/* ===== Override final: burbuja del usuario + avatar pegados a la derecha ===== */
+.msg-row.user {
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.msg-row.user .message.user {
+  order: 1;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.msg-row.user .avatar {
+  order: 2;
+  margin-top: 0;
+}
+
+/* Avatar del usuario arriba, alineado con la primera línea de la pregunta (igual que el bot) */
+.msg-row.user {
+  align-items: flex-start;
+}
+
+.msg-row.user .avatar {
+  margin-top: 2px;
+}
+
+/* Las burbujas de ambos lados comparten los mismos márgenes:
+   dejan reservado el ancho del avatar (34px + 8px de gap) en AMBOS lados,
+   así la burbuja del usuario nunca empieza más a la izquierda que la del bot. */
+.msg-row .message {
+  max-width: calc(100% - 84px);
+}
+
+/* Botones del header (sonido + preferencias) lado a lado */
+.header-buttons {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.sound-btn:hover {
+  transform: none; /* sin la rotación de la rueda */
+}
