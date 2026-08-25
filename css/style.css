@@ -304,7 +304,9 @@ body {
    IMÁGENES Y VIDEOS EN CHAT
    ============================================================ */
 .chat-image {
-  max-width: 100%;
+  display: block;
+  max-width: min(320px, 85%);
+  height: auto;
   border-radius: 10px;
   margin-top: 10px;
 }
@@ -516,6 +518,16 @@ body {
   display: flex;
   gap: 8px;
   flex-shrink: 0;
+}
+
+.prefs-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.prefs-btn svg {
+  display: block;
 }
 
 .sound-btn:hover {

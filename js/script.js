@@ -58,7 +58,9 @@ function applyPrefs(p) {
   html.setAttribute("data-theme", p.theme);
   html.setAttribute("data-fontsize", p.fontsize);
   if (soundBtn) {
-    soundBtn.textContent = p.sound === "off" ? "🔇" : "🔊";
+    const ICON_ON = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>';
+    const ICON_OFF = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>';
+    soundBtn.innerHTML = p.sound === "off" ? ICON_OFF : ICON_ON;
     soundBtn.title = p.sound === "off" ? "Sonido silenciado (tocá para activar)" : "Sonido activado (tocá para silenciar)";
   }
   document.querySelectorAll(".prefs-options").forEach(group => {
@@ -287,6 +289,10 @@ function initAudio() {
     if (audioCtx.state === "suspended") audioCtx.resume();
   } catch (e) {}
 }
+
+// iOS/Safari: desbloquear el audio con el primer toque del usuario
+document.addEventListener("touchstart", initAudio, { once: true });
+document.addEventListener("click", initAudio, { once: true });
 
 function playNotify() {
   if (prefs.sound === "off") return;
