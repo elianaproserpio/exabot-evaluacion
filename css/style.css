@@ -536,10 +536,17 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  background: rgba(0, 0, 0, 0.18); /* disco oscuro: el ícono blanco resalta */
+}
+
+.prefs-btn:hover {
+  background: rgba(0, 0, 0, 0.3);
 }
 
 .prefs-btn svg {
   display: block;
+  width: 22px;
+  height: 22px;
 }
 
 .sound-btn:hover {
