@@ -65,4 +65,4 @@ ExaBot---asistente-virtual-para-la-FCEyT/
 
 ---
 
-*Última actualización: julio de 2026.*
+*Última actualización: agosto de 2026.*
