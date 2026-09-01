@@ -37,17 +37,17 @@ async function sendMessage(text) {
     const raw = await response.text();
 
     if (!raw) {
-      addMessage("Error.", "bot");
+      addMessage("El asistente no está disponible en este momento. Intentá de nuevo en unos segundos.", "bot");
       return;
     }
 
     let data = JSON.parse(raw);
     if (Array.isArray(data)) data = data[0];
-    const texto = data?.message || data?.output || data?.response || data?.text || "Error.";
+    const texto = data?.message || data?.output || data?.response || data?.text || "El asistente no está disponible en este momento.";
     addMessage(texto, "bot");
 
   } catch (error) {
-    addMessage("El asistente no esta disponible.", "bot");
+    addMessage("El asistente no está disponible en este momento. Intentá de nuevo en unos segundos.", "bot");
     console.error(error);
   } finally {
     chatInput.disabled = false;

@@ -343,7 +343,7 @@ async function sendMessage(text, visibleText = text) {
     stopLoadingAnimation(loading);
 
     if (!raw) {
-      addMessage("n8n respondió vacío. Revisá el nodo Respond to Webhook.", "bot");
+      addMessage("⚠️ Ups, hubo un problema al obtener la respuesta. Esperá unos segundos y volvé a intentarlo.", "bot");
       return;
     }
 
@@ -383,7 +383,7 @@ async function sendMessage(text, visibleText = text) {
 
   } catch (error) {
     stopLoadingAnimation(loading);
-    addMessage("No pude conectar con ExaBot. Revisá si n8n está activo o si el Webhook está escuchando.", "bot");
+    addMessage("⚠️ No pudimos conectar con ExaBot en este momento. Esperá unos segundos y volvé a intentarlo.", "bot");
     console.error(error);
   } finally {
     chatInput.disabled = false;
